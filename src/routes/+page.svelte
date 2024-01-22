@@ -51,8 +51,9 @@
 	const imgExtention = 'png';
 
 	function onDecryptFormSubmit() {
-		if (!passwordInput) {
-			passwordInputError = 'Please enter a password.';
+		if (passwordInput === undefined) {
+			/* passwordInputError = 'Please enter a password.'; */
+			passwordInput = '';
 			return;
 		}
 		if (!encryptedSeed) {
