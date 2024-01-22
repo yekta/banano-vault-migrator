@@ -9,6 +9,8 @@
 	import IconEyeClosed from '@components/icons/IconEyeClosed.svelte';
 	import IconEyeOpen from '@components/icons/IconEyeOpen.svelte';
 	import IconArrow from '@components/icons/IconArrow.svelte';
+	import { onMount } from 'svelte';
+	import { decryptSeed, isSeedValid } from '@ts/utils/decryptSeed';
 
 	const description =
 		'Banano Vault has been deprecated. Our new browser-based official Banano wallet is The Banano Stand. Time to move on.';
@@ -26,6 +28,7 @@
 	const hiddenSeedPlaceholderString = Array.from({ length: SEED_LENGTH })
 		.map((_) => '•')
 		.join('');
+	const VAULT_LOCALSTORAGE_KEY = 'nanovault-wallet';
 
 	const wallets: TWallet[] = [
 		{
@@ -52,18 +55,48 @@
 			passwordInputError = 'Please enter a password.';
 			return;
 		}
-		// TODO: Decrypt seed
-		/* const decryptedSeed = decryptSeed({ password: passwordInput, encryptedSeed }); */
 		if (!encryptedSeed) {
-			// TODO: Show error
-			encryptedSeed = 'testvalue';
-			/* return; */
+			passwordInputError = "No encrypted seed found, can't decrypt.";
+			return;
 		}
-		decryptedSeed = 'testvalue';
-		migrationState = 'seed-decrypted';
+		try {
+			const _decryptedSeed = decryptSeed({
+				password: passwordInput,
+				encryptedSeed
+			});
+			if (!_decryptedSeed) {
+				passwordInputError = 'Something went wrong with the decryption.';
+				return;
+			}
+			const isValid = isSeedValid(_decryptedSeed);
+			if (isValid) {
+				passwordInputError = 'Decrypted seed is invalid.';
+				return;
+			}
+			migrationState = 'seed-decrypted';
+			decryptedSeed = _decryptedSeed;
+		} catch (error) {
+			console.log(error);
+			passwordInputError = 'Something went wrong with the decryption.';
+		}
 	}
 
-	function decryptSeed({ encryptedSeed, password }: { encryptedSeed: string; password: string }) {}
+	onMount(() => {
+		try {
+			const vaultData = localStorage.getItem(VAULT_LOCALSTORAGE_KEY);
+			if (vaultData) {
+				const parsedVaultData = JSON.parse(vaultData);
+				if (parsedVaultData && parsedVaultData.locked && parsedVaultData.seed) {
+					encryptedSeed = parsedVaultData.seed;
+					migrationState = 'encrypted-seed-found';
+				}
+			} else {
+				console.log('No Banano Vault data found.');
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	});
 </script>
 
 <MetaTags
