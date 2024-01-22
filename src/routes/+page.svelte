@@ -54,7 +54,6 @@
 		if (passwordInput === undefined) {
 			/* passwordInputError = 'Please enter a password.'; */
 			passwordInput = '';
-			return;
 		}
 		if (!encryptedSeed) {
 			passwordInputError = "No encrypted seed found, can't decrypt.";
