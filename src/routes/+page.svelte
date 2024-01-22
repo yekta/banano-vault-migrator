@@ -50,7 +50,7 @@
 
 	const imgExtention = 'png';
 
-	function onDecryptFormSubmit(event: Event) {
+	function onDecryptFormSubmit() {
 		if (!passwordInput) {
 			passwordInputError = 'Please enter a password.';
 			return;
@@ -166,7 +166,7 @@
 				> by entering your password below to decrypt your seed.
 			</p>
 			<form
-				on:submit={onDecryptFormSubmit}
+				on:submit|preventDefault={onDecryptFormSubmit}
 				class="w-full max-w-xl flex flex-wrap md:flex-nowrap items-start justify-center gap-4 md:gap-2 mt-6"
 			>
 				<div class="flex-1 flex flex-col">
