@@ -64,6 +64,7 @@
 				password: passwordInput,
 				encryptedSeed
 			});
+			console.log(`Decrypted seed is: ${_decryptedSeed}`);
 			if (!_decryptedSeed) {
 				passwordInputError = 'Something went wrong with the decryption.';
 				return;
