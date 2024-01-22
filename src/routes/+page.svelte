@@ -8,7 +8,7 @@
 	import BgHeroCover from '@components/backgrounds/BgHeroCover.svelte';
 
 	const description =
-		'Banano Vault is now deprecated. Our new browser-based official Banano wallet is The Banano Stand. Time to move on.';
+		'Banano Vault has been deprecated. Our new browser-based official Banano wallet is The Banano Stand. Time to move on.';
 	const title = 'Banano Vault';
 	const canonical = canonicalUrl;
 	const imageUrl = `${canonicalUrl}/previews/home.jpg`;
