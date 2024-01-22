@@ -9,6 +9,7 @@
 	export { classes as class };
 	export let disabled = false;
 	export let loading = false;
+	export let type: 'button' | 'submit' | 'reset' = 'button';
 	let classes = '';
 
 	$: bgAndTextClass = getBgAndTextClass(buttonType);
@@ -59,6 +60,7 @@
 	<button
 		{...$$restProps}
 		on:click={onClick}
+		{type}
 		disabled={disabled || loading}
 		class="flex flex-row items-center {isLeft
 			? 'justify-start'
