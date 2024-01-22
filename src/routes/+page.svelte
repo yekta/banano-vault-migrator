@@ -18,6 +18,7 @@
 
 	let migrationState: 'idle' | 'encrypted-seed-found' | 'seed-decrypted' = 'idle';
 	let passwordInput: string;
+	let passwordInputError: string | undefined;
 	let encryptedSeed: string | undefined;
 	let decryptedSeed: string | undefined;
 	let isSeedHidden = true;
@@ -48,15 +49,16 @@
 
 	function onDecryptFormSubmit(event: Event) {
 		if (!passwordInput) {
+			passwordInputError = 'Please enter a password.';
 			return;
 		}
+		// TODO: Decrypt seed
+		/* const decryptedSeed = decryptSeed({ password: passwordInput, encryptedSeed }); */
 		if (!encryptedSeed) {
 			// TODO: Show error
 			encryptedSeed = 'testvalue';
 			/* return; */
 		}
-		// TODO: Decrypt seed
-		/* const decryptedSeed = decryptSeed({ password: passwordInput, encryptedSeed }); */
 		decryptedSeed = 'testvalue';
 		migrationState = 'seed-decrypted';
 	}
@@ -132,15 +134,23 @@
 			</p>
 			<form
 				on:submit={onDecryptFormSubmit}
-				class="w-full max-w-xl flex flex-wrap md:flex-nowrap items-center justify-center gap-4 md:gap-2 mt-6"
+				class="w-full max-w-xl flex flex-wrap md:flex-nowrap items-start justify-center gap-4 md:gap-2 mt-6"
 			>
-				<input
-					type="password"
-					bind:value={passwordInput}
-					class="w-full font-medium placeholder-c-on-bg/50 text-c-on-bg px-4 py-4.5 rounded-xl
-					border-[3px] bg-c-on-bg/5 border-c-on-bg/8 hover:border-c-on-bg/30 focus:border-c-secondary transition"
-				/>
-				<Button class="-mt-2 w-full md:w-auto" buttonType="secondary" type="submit">Decrypt</Button>
+				<div class="flex-1 flex flex-col">
+					<input
+						on:input={() => (passwordInputError = undefined)}
+						type="password"
+						bind:value={passwordInput}
+						class="w-full font-medium placeholder-c-on-bg/50 text-c-on-bg px-4 py-4.5 rounded-xl
+						border-[3px] bg-c-on-bg/5 border-c-on-bg/8 hover:border-c-on-bg/30 focus:border-c-secondary transition"
+					/>
+					{#if passwordInputError !== undefined}
+						<p class="w-full px-2 py-1 text-sm text-left font-semibold text-c-danger">
+							{passwordInputError}
+						</p>
+					{/if}
+				</div>
+				<Button class="w-full md:w-auto" buttonType="secondary" type="submit">Decrypt</Button>
 			</form>
 		{:else if migrationState === 'seed-decrypted'}
 			<h2 class="text-3xl font-bold px-3 md:px-3">Seed Decrypted!</h2>
@@ -151,14 +161,14 @@
 					href={bananoWallets.thebananostand.url}>The Banano Stand</a
 				> and import it there to continue using your wallet.
 			</p>
-			<div class="w-full max-w-3xl flex items-center justify-center mt-6 gap-2">
+			<div class="w-full max-w-3xl flex items-start justify-center mt-6 gap-2">
 				<div
 					class="flex-1 break-all text-c-on-bg px-4 py-4.5 rounded-xl
 					border-[3px] bg-c-on-bg/5 border-c-on-bg/8 transition font-mono font-semibold"
 				>
 					{isSeedHidden ? hiddenSeedPlaceholderString : decryptedSeed}
 				</div>
-				<Button class="-mt-2" buttonType="secondary" onClick={() => (isSeedHidden = !isSeedHidden)}>
+				<Button buttonType="secondary" onClick={() => (isSeedHidden = !isSeedHidden)}>
 					<div class="py-1">
 						{#if isSeedHidden}
 							<IconEyeOpen />
