@@ -13,7 +13,7 @@ export function decryptSeed({
 
 export function isSeedValid(str: string) {
 	// Regular expression to check if string is a valid hexadecimal
-	const regexp = /^[0-9A-Fa-f]+$/;
+	const regexp = /^[0-9A-Fa-f]{64}$/;
 	// Test if the string matches the regular expression
 	return regexp.test(str);
 }
