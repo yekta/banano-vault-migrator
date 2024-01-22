@@ -70,7 +70,7 @@
 				return;
 			}
 			const isValid = isSeedValid(_decryptedSeed);
-			if (isValid) {
+			if (!isValid) {
 				passwordInputError = 'Decrypted seed is invalid.';
 				return;
 			}
