@@ -90,7 +90,10 @@
 					encryptedSeed = parsedVaultData.seed;
 					migrationState = 'encrypted-seed-found';
 				} else if (parsedVaultData) {
-					console.log("Vault data found, but it's not locked or doesn't have a seed.");
+					console.log(
+						"Vault data found, but it's not locked or doesn't have a seed.",
+						parsedVaultData
+					);
 				}
 			} else {
 				console.log('No Banano Vault data found.');
