@@ -18,7 +18,7 @@
 	const canonical = canonicalUrl;
 	const imageUrl = `${canonicalUrl}/previews/home.jpg`;
 
-	let migrationState: 'idle' | 'encrypted-seed-found' | 'seed-decrypted' = 'idle';
+	let migrationState: 'idle' | 'loading' | 'encrypted-seed-found' | 'seed-decrypted' = 'loading';
 	let passwordInput: string;
 	let passwordInputError: string | undefined;
 	let encryptedSeed: string | undefined;
@@ -94,12 +94,15 @@
 						"Vault data found, but it's not locked or doesn't have a seed.",
 						parsedVaultData
 					);
+					migrationState = 'idle';
 				}
 			} else {
 				console.log('No Banano Vault data found.');
+				migrationState = 'idle';
 			}
 		} catch (error) {
-			console.log(error);
+			console.log('Something went wrong when checking for local storage', error);
+			migrationState = 'idle';
 		}
 	});
 </script>
@@ -146,14 +149,20 @@
 						>The Banano Stand</a
 					>.
 				</p>
-				<Button
-					class="mt-6"
-					buttonType="primary"
-					href={migrationState !== 'idle' ? '/#migrate' : bananoWallets.thebananostand.url}
-					target={migrationState !== 'idle' ? undefined : '_blank'}
-				>
-					{migrationState !== 'idle' ? 'Start Migrating' : 'Visit The Banano Stand'}
-				</Button>
+				{#if migrationState === 'loading'}
+					<Button class="mt-6" buttonType="primary" disabled={true}>
+						Checking local storage...
+					</Button>
+				{:else}
+					<Button
+						class="mt-6"
+						buttonType="primary"
+						href={migrationState !== 'idle' ? '/#migrate' : bananoWallets.thebananostand.url}
+						target={migrationState !== 'idle' ? undefined : '_blank'}
+					>
+						{migrationState !== 'idle' ? 'Start Migrating' : 'Visit The Banano Stand'}
+					</Button>
+				{/if}
 			</div>
 		</div>
 	</div>

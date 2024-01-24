@@ -12,34 +12,34 @@
 	export let type: 'button' | 'submit' | 'reset' = 'button';
 	let classes = '';
 
-	$: bgAndTextClass = getBgAndTextClass(buttonType);
+	$: bgAndTextClass = getBgAndTextClass(buttonType, disabled);
 
-	function getBgAndTextClass(type: TButton) {
+	function getBgAndTextClass(type: TButton, disabled: boolean) {
 		switch (type) {
 			case 'primary':
-				return `bg-c-primary text-c-on-bg shadow-c-primary-shaded hover:shadow-c-primary-shaded hover:brightness-108`;
+				return `bg-c-primary text-c-on-bg shadow-c-primary-shaded ${!disabled && 'hover:shadow-c-primary-shaded hover:brightness-108'}`;
 			case 'secondary':
-				return `bg-c-secondary text-c-bg shadow-c-secondary-shaded hover:shadow-c-secondary-shaded hover:brightness-115`;
+				return `bg-c-secondary text-c-bg shadow-c-secondary-shaded ${!disabled && 'hover:shadow-c-secondary-shaded hover:brightness-115'}`;
 			case 'bg':
-				return `bg-c-bg-secondary text-c-on-bg shadow-c-bg-secondary-shaded hover:shadow-c-bg-secondary-shaded hover:brightness-95`;
+				return `bg-c-bg-secondary text-c-on-bg shadow-c-bg-secondary-shaded hover:${!disabled && 'shadow-c-bg-secondary-shaded hover:brightness-95'}`;
 			case 'discord':
-				return `bg-c-discord text-c-bg shadow-c-discord-shaded hover:shadow-c-discord-shaded hover:brightness-115`;
+				return `bg-c-discord text-c-bg shadow-c-discord-shaded ${!disabled && 'hover:shadow-c-discord-shaded hover:brightness-115'}`;
 			case 'reddit':
-				return `bg-c-reddit text-c-bg shadow-c-reddit-shaded hover:shadow-c-reddit-shaded hover:brightness-110`;
+				return `bg-c-reddit text-c-bg shadow-c-reddit-shaded ${!disabled && 'hover:shadow-c-reddit-shaded hover:brightness-110'}`;
 			case 'twitter':
-				return `bg-c-twitter text-c-bg shadow-c-twitter-shaded hover:shadow-c-twitter-shaded hover:brightness-110`;
+				return `bg-c-twitter text-c-bg shadow-c-twitter-shaded ${!disabled && 'hover:shadow-c-twitter-shaded hover:brightness-110'}`;
 			case 'youtube':
-				return `bg-c-youtube text-c-bg shadow-c-youtube-shaded hover:shadow-c-youtube-shaded hover:brightness-110`;
+				return `bg-c-youtube text-c-bg shadow-c-youtube-shaded ${!disabled && 'hover:shadow-c-youtube-shaded hover:brightness-110'}`;
 			case 'medium':
-				return `bg-c-medium text-c-bg shadow-c-medium-shaded hover:shadow-c-medium-shaded hover:brightness-120`;
+				return `bg-c-medium text-c-bg shadow-c-medium-shaded ${!disabled && 'hover:shadow-c-medium-shaded hover:brightness-120'}`;
 			case 'instagram':
-				return `bg-c-instagram text-c-bg shadow-c-instagram-shaded hover:shadow-c-instagram-shaded hover:brightness-110`;
+				return `bg-c-instagram text-c-bg shadow-c-instagram-shaded ${!disabled && 'hover:shadow-c-instagram-shaded hover:brightness-110'}`;
 			case 'telegram':
-				return `bg-c-telegram text-c-bg shadow-c-telegram-shaded hover:shadow-c-telegram-shaded hover:brightness-115`;
+				return `bg-c-telegram text-c-bg shadow-c-telegram-shaded ${!disabled && 'hover:shadow-c-telegram-shaded hover:brightness-115'}`;
 			case 'facebook':
-				return `bg-c-facebook text-c-bg shadow-c-facebook-shaded hover:shadow-c-facebook-shaded hover:brightness-120`;
+				return `bg-c-facebook text-c-bg shadow-c-facebook-shaded ${!disabled && 'hover:shadow-c-facebook-shaded hover:brightness-120'}`;
 			default:
-				return `bg-c-primary text-c-on-bg shadow-c-primary-shaded hover:shadow-c-primary-shaded hover:brightness-110`;
+				return `bg-c-primary text-c-on-bg shadow-c-primary-shaded ${!disabled && 'hover:shadow-c-primary-shaded hover:brightness-110'}`;
 		}
 	}
 </script>
