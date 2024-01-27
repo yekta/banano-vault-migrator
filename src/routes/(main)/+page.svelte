@@ -188,6 +188,7 @@
 						on:input={() => (passwordInputError = undefined)}
 						type="password"
 						bind:value={passwordInput}
+						placeholder="Banano Vault password"
 						class="w-full font-medium placeholder-c-on-bg/50 text-c-on-bg px-4 py-4.5 rounded-xl
 						border-[3px] bg-c-on-bg/5 border-c-on-bg/8 hover:border-c-on-bg/30 focus:border-c-secondary transition"
 					/>
