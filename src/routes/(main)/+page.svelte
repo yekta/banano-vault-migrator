@@ -34,7 +34,7 @@
 		{
 			title: 'The Banano Stand',
 			description: 'Browser-based lightwallet that also supports Ledger Nano S. Ideal for desktop.',
-			buttonText: 'Visit BananoStand',
+			buttonText: 'Visit The Banano Stand',
 			url: bananoWallets.thebananostand.url,
 			img: 'thebananostand'
 		},
