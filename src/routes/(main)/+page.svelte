@@ -165,9 +165,6 @@
 						Checking local storage...
 					</Button>
 				{:else}
-					{#if migrationState === 'idle' && migratorMessage !== undefined && migratorMessage !== noDataFoundMessage}
-						<VaultDataStatusBanner message={migratorMessage} class="mt-4.5" />
-					{/if}
 					<Button
 						class="mt-6"
 						buttonType="primary"
@@ -176,6 +173,9 @@
 					>
 						{migrationState !== 'idle' ? 'Start Migrating' : 'Visit The Banano Stand'}
 					</Button>
+				{/if}
+				{#if migrationState === 'idle' && migratorMessage !== undefined && migratorMessage !== noDataFoundMessage}
+					<VaultDataStatusBanner message={migratorMessage} class="mt-10" />
 				{/if}
 			</div>
 		</div>
