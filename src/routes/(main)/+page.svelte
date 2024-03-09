@@ -154,7 +154,7 @@
 				class="w-full max-w-7xl px-8 md:px-24 flex flex-col items-center self-center pt-20 pb-32 md:pt-24 md:pb-36 relative z-10 text-c-bg"
 			>
 				<h1 class="font-bold text-4xl md:text-5xl">Time to move on!</h1>
-				<p class="text-xl mt-5 max-w-2xl">
+				<p class="text-xl mt-4 max-w-2xl">
 					Banano Vault is no longer supported. We have a better official browser-based wallet now:
 					<a href={bananoWallets.thebananostand.url} target="_blank" class="hover:underline"
 						>The Banano Stand</a
