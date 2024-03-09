@@ -1,15 +1,20 @@
 <script lang="ts">
+	import IconInfo from '@components/icons/IconInfo.svelte';
+
 	export let message: string;
 	export { classes as class };
 	let classes = '';
 </script>
 
 <div
-	class="bg-c-bg rounded-xl max-w-lg text-center flex flex-col border-2 border-c-bg/20 {classes}"
+	class="bg-c-secondary-shaded/50 px-4.5 pt-2.75 pb-3 rounded-xl max-w-md
+	text-left flex flex-col ring-2 ring-c-secondary-shaded/75 {classes}"
 >
-	<p class="font-bold -mt-0.5 px-5 py-1.5 text-c-secondary text-lg">Your Vault's Status</p>
-	<div class="w-full h-[2px] bg-c-bg/20"></div>
-	<p class="bg-c-secondary rounded-[0.65rem] max-w-lg text-left px-5 py-2.5 text-sm">
+	<div class="flex items-center justify-start gap-1">
+		<IconInfo class="w-5.5 h-5.5 shrink-0" />
+		<p class="font-medium text-lg leading-tight">Your Wallet Status</p>
+	</div>
+	<p class="text-left text-sm mt-1 text-c-bg/75 font-normal break-words">
 		{message}
 	</p>
 </div>
