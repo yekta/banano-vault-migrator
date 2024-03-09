@@ -11,6 +11,7 @@
 	import IconArrow from '@components/icons/IconArrow.svelte';
 	import { onMount } from 'svelte';
 	import { decryptSeed, isSeedValid } from '@ts/utils/decryptSeed';
+	import VaultDataStatusBanner from '@components/VaultDataStatusBanner.svelte';
 
 	const description =
 		'Banano Vault has been deprecated. Our new browser-based official Banano wallet is The Banano Stand. Time to move on.';
@@ -19,6 +20,8 @@
 	const imageUrl = `${canonicalUrl}/previews/home.jpg`;
 
 	let migrationState: 'idle' | 'loading' | 'encrypted-seed-found' | 'seed-decrypted' = 'loading';
+	let migratorMessage: string | undefined = undefined;
+	const noDataFoundMessage = 'No Banano Vault data found.';
 	let passwordInput: string;
 	let passwordInputError: string | undefined;
 	let encryptedSeed: string | undefined;
@@ -89,20 +92,28 @@
 				if (parsedVaultData && parsedVaultData.locked && parsedVaultData.seed) {
 					encryptedSeed = parsedVaultData.seed;
 					migrationState = 'encrypted-seed-found';
-				} else if (parsedVaultData) {
-					console.log(
-						"Vault data found, but it's not locked or doesn't have a seed.",
-						parsedVaultData
-					);
-					migrationState = 'idle';
+					console.log('Data found', parsedVaultData);
+					return;
 				}
-			} else {
-				console.log('No Banano Vault data found.');
+				if (parsedVaultData) {
+					migratorMessage = "Banano Vault data found, but it's not locked or doesn't have a seed.";
+					migrationState = 'idle';
+					console.log(migratorMessage, parsedVaultData);
+					return;
+				}
+				migratorMessage = 'Banano Vault data found, but it could not be parsed.';
 				migrationState = 'idle';
+				console.log(migratorMessage, vaultData);
+				return;
 			}
-		} catch (error) {
-			console.log('Something went wrong when checking for local storage', error);
+			migratorMessage = noDataFoundMessage;
 			migrationState = 'idle';
+			console.log(migratorMessage);
+			return;
+		} catch (error) {
+			migratorMessage = 'Something went wrong with the Banano Vault data extraction process.';
+			migrationState = 'idle';
+			console.log(migratorMessage, error);
 		}
 	});
 </script>
@@ -154,6 +165,9 @@
 						Checking local storage...
 					</Button>
 				{:else}
+					{#if migrationState === 'idle' && migratorMessage !== undefined && migratorMessage !== noDataFoundMessage}
+						<VaultDataStatusBanner message={migratorMessage} class="mt-4.5" />
+					{/if}
 					<Button
 						class="mt-6"
 						buttonType="primary"
